@@ -1,0 +1,48 @@
+import { GroupBox, Button , ListView, TextEdit , VerticalBox} from "std-widgets.slint";
+
+export component MyWindow inherits Window {
+    title: "Prime";
+
+    width: 800px;
+    height: 600px;
+
+    in-out property <string> input_number;
+    in-out property <[string]> list_of_primes;
+
+    callback check_clicked(string);
+    callback count_clicked(string);
+    
+    VerticalBox { 
+        HorizontalLayout {
+            height: 50px;
+    
+            check-button := Button{
+                width: 100px;
+                text: "check";
+                clicked => {
+                    check_clicked(root.input_number);
+                }
+            }
+            count-button := Button{
+                width: 100px;
+                text: "count";
+                clicked => {
+                    count_clicked(root.input_number);
+                }
+            }
+        }
+
+        input := TextEdit {
+            height: 50px;
+            edited(_input) => {
+                root.input_number = _input;
+            }
+        }
+
+        log-win := ListView {    
+            for prime in list-of-primes: Text{
+                text: prime;
+            }
+        }
+    }
+}
